@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio ocelot</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            /* backdrop-filter: blur(10px); */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        .section {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.4s; }
+        .section:nth-child(4) { animation-delay: 0.6s; }
+
+        /* Home Section */
+        .home-content {
+            text-align: center;
+            animation: fadeIn 1.2s ease-out 0.5s both;
+        }
+
+        .profile-image {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 4rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .home-title {
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff0080, #00ff80, #8000ff, #ff8000);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            overflow: hidden;
+            border-right: 3px solid #fff;
+            white-space: nowrap;
+            animation: typing 2s steps(6, end) 1s both, blink-caret 1s step-end infinite 3s, rgbShift 3s ease-in-out infinite, floatTitle 4s ease-in-out infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-caret {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: #fff;
+            }
+        }
+
+        @keyframes rgbShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes floatTitle {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-15px) rotate(-1deg);
+            }
+        }
+
+        .home-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* About Section */
+        .about-content {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .about-title {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.1);
+            /* backdrop-filter: blur(10px); */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            min-width: 140px;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .social-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-icon {
+        }
+
+        .social-icon img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 2rem;
+            margin-bottom: 0.7rem;
+            display: block;
+        }
+
+        .social-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .social-card {
+                padding: 0.8rem;
+            }
+            .about-content {
+                max-width: 95vw;
+            }
+            .profile-image {
+                width: 90px;
+                height: 90px;
+            }
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .home-title {
+                font-size: 2rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-card {
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Ocelot</div>
+            <ul class="nav-links">
+                <li><a href="#home" onclick="scrollToSection('home')">Home</a></li>
+                <li><a href="#about" onclick="scrollToSection('about')">About</a></li>
+                <li><a href="#social" onclick="scrollToSection('social')">Aktif Di</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="section">
+            <div class="home-content">
+                 <img src="download (2).jpg" alt="ocelot-picture" class="profile-image">
+                <h1 class="home-title">Ocelot</h1>
+                <p class="home-subtitle">Welcome </p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="about-content">
+                <h2 class="about-title">About Me</h2>
+                <p class="about-text">
+                    Halo! Saya Ocelot, seorang content creator yang aktif di berbagai platform digital. 
+                    Saya senang berbagi pengalaman gaming, berinteraksi dengan komunitas, dan menciptakan 
+                    konten yang menghibur. Mari terhubung dan bergabung dalam petualangan digital saya!
+                </p>
+                <p class="home-title">My Skills</p>
+                <div class=" social-card">web engineer</div>
+                <div class=" social-card">youtuber</div>
+                <div class=" social-card">make a some fun</div>
+            </div>
+        </section>
+
+        <!-- Social Links Section -->
+        <section id="social" class="section">
+            <div class="about-content">
+                <h2 class="about-title">Aktif Di</h2>
+                <div class="social-links">
+                    <a href="https://www.roblox.com/users/1187035068/profile" target="_blank" rel="noopener noreferrer" class="social-card">
+                        <span class="social-icon"><img src="roblox.png" alt="roblox"></span>
+                        <div class="social-name">Roblox</div>
+                        <div class="social-desc">Gaming & Adventures</div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/@OcelotReal/" target="_blank" rel="noopener noreferrer" class="social-card">
+                        <span class="social-icon"><img src="youtube.png" alt=""></span>
+                        <div class="social-name">YouTube</div>
+                        <div class="social-desc">Videos & Content</div>
+                    </a>
+                    
+                    <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-card">
+                        <span class="social-icon"><img src="" alt=""></span>
+                        <div class="social-name">Discord</div>
+                        <div class="social-desc">Community & Chat</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            element.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        // Add scroll effect for navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'987148ba813cf922',t:'MTc1OTIwOTc2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
